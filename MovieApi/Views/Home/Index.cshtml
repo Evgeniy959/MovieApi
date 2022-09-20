@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Movie search</h1>
+</div>
+
+<form asp-controller="Home" asp-action="Search" method="get" class="input-group mb-3">
+    <input required name="title" type="text" class="form-control" placeholder="Recipient's movie title" aria-label="Recipient's movie title" aria-describedby="button-addon2">
+    @*<input required name="age" type="text" class="form-control" placeholder="Recipient's movie title" aria-label="Recipient's movie title" aria-describedby="button-addon2">*@
+    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+</form>
+
+
+@section Scripts{
+    <script>
+        $('h1').click(function () {
+            $(this).text("Clicked!")
+        });
+    </script>
+}

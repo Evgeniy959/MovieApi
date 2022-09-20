@@ -1,0 +1,23 @@
+﻿@model Details
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="row h-100">
+    <div class="col-lg-7">
+        <h3>@Model.Title</h3>
+        <P>@Model.Genre</P>
+        <P>@Model.Year</P>
+        <P>@Model.DVD</P>
+        <P>@Model.Country</P>
+        <P>@Model.Director</P>
+        <P>@Model.Actors</P>
+        <P>@Model.Awards</P>
+        <P>@Model.Runtime</P>
+    </div>
+    <div class="col-lg-5">
+        <img src ="@Model.Poster"/>
+    </div>
+</div>
