@@ -7,7 +7,7 @@
 
 @if (@ViewBag.MovieTitle != null)
 {
-    <h1>Search results by title : @ViewBag.MovieTitle</h1>
+    <h1>Search results by title : @ViewBag.MovieTitle (@ViewBag.Result)</h1>
 
     <div class="row">
         @foreach(var item in Model.Search )

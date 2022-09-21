@@ -36,7 +36,8 @@ namespace MovieApi.Controllers
             //Console.WriteLine(title +"-"+age);
             //ViewBag.Result = result;
             var result = await movieApiService.SearchByTitle(title);
-            ViewBag.MovieTitle = title;
+            ViewBag.Result = result.totalResults;
+            ViewBag.MovieTitle = result?.Search[0]?.Title; 
             return View(result);
         }
         public async Task<IActionResult> Details(string id)
