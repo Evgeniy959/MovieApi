@@ -29,12 +29,6 @@ namespace MovieApi.Controllers
         
         public async Task<IActionResult> Search(string title)
         {
-            /*HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync($"https://omdbapi.com/?apikey=5b9b7798&s={title}");
-            var result = await response.Content.ReadAsStringAsync();
-            //Console.WriteLine(result);*/
-            //Console.WriteLine(title +"-"+age);
-            //ViewBag.Result = result;
             var result = await movieApiService.SearchByTitle(title);
             ViewBag.Result = result.totalResults;
             ViewBag.MovieTitle = result?.Search[0]?.Title; 
@@ -43,7 +37,7 @@ namespace MovieApi.Controllers
         public async Task<IActionResult> Details(string id)
         {
             Details details = await movieApiService.SearchById(id);
-            Console.WriteLine("999999999 - " + id);
+            Console.WriteLine("Details - " + id);
             return View(details);
         }
 
