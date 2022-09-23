@@ -1,0 +1,13 @@
+﻿@model Details
+
+<div class="card">
+    <img src="@Model.Poster" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Year.</p>
+        @if (Model.Plot == null)
+        {
+            <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.imdbID" class="btn btn-primary">Show Details</a>
+        }
+    </div>
+</div>
