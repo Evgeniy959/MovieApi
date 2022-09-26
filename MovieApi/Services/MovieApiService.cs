@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using MovieApi.Models;
 using MovieApi.Options;
 using System;
@@ -15,8 +16,9 @@ namespace MovieApi.Services
         public string BaseUrl { get; }
         public string ApiKey { get; }
         private HttpClient httpClient;
+        private readonly IMemoryCache memoryCache;
 
-        public MovieApiService(IHttpClientFactory httpClientFactory, IOptions<MovieApiOptions> options)
+        public MovieApiService(IHttpClientFactory httpClientFactory, IOptions<MovieApiOptions> options, IMemoryCache memoryCache)
         {
             /*BaseUrl = "https://omdbapi.com/";
             ApiKey = "5b9b7798";*/
@@ -24,7 +26,7 @@ namespace MovieApi.Services
             BaseUrl = options.Value.BaseUrl;
             ApiKey = options.Value.ApiKey;
             httpClient = httpClientFactory.CreateClient();
-            //httpClient = new HttpClient();
+            this.memoryCache = memoryCache;
         }
 
         /*public async Task<string> SearchByTitle(string title)
@@ -37,26 +39,39 @@ namespace MovieApi.Services
         }*/
         public async Task<MovieApiResponse> SearchByTitle(string title)
         {
-            var response = await httpClient.GetAsync($"{BaseUrl}?apikey={ApiKey}&s={title}");
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<MovieApiResponse>(json);
-            if (result.Response == "False") 
+            MovieApiResponse result = null;
+            //hulk,Hulk,HULK,HULk =>hulk
+            if (!memoryCache.TryGetValue(title.ToLower(), out result))
             {
-                throw new Exception(result.Error);
+                var response = await httpClient.GetAsync($"{BaseUrl}?apikey={ApiKey}&s={title}");
+                var json = await response.Content.ReadAsStringAsync();
+                result = JsonSerializer.Deserialize<MovieApiResponse>(json);
+                if (result.Response == "False")
+                {
+                    throw new Exception(result.Error);
+                }
+                memoryCache.Set(title.ToLower(), result);
             }
+            
             return result;
         }
 
         public async Task<Details> SearchById(string id)
         {
-        //https://omdbapi.com/?i=tt0286716&apikey=5b9b7798&page=2
-            var response = await httpClient.GetAsync($"{BaseUrl}?apikey={ApiKey}&i={id}");
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<Details>(json);
-            if (result.Response == "False")
+            //https://omdbapi.com/?i=tt0286716&apikey=5b9b7798&page=2
+            Details result = null;
+            if (!memoryCache.TryGetValue(id, out result))
             {
-                throw new Exception(result.Error);
+                var response = await httpClient.GetAsync($"{BaseUrl}?apikey={ApiKey}&i={id}");
+                var json = await response.Content.ReadAsStringAsync();
+                result = JsonSerializer.Deserialize<Details>(json);
+                if (result.Response == "False")
+                {
+                    throw new Exception(result.Error);
+                }
+                memoryCache.Set(id, result);
             }
+            
             return result;
         }
     }
