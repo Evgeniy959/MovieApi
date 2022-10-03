@@ -4,8 +4,6 @@
     @if (Model.Plot == null)
     {
     <a asp-action="Details" asp-controller="Home" asp-route-id="@Model.imdbID">
-        @*<img src="@(Model.Poster=="N/A" ? "/images/post.png":@Model.Poster)" class="card-img-top" alt="...">*@
-        @*<img src="@Model.Poster" class="card-img-top" alt="...">*@
         <img src="@Model.Poster" onerror="event.target.src='/images/post.png'" class="card-img-top" alt="...">
     </a>
     }
@@ -13,14 +11,16 @@
     {
         <img src="@Model.Poster" class="card-img-top" alt="...">
     }
-    <div class="img-div nav card-body">
-        <h5 class="card-title">@Model.Title</h5>
-        <p class="card-text">@Model.Year.</p>
-        @if (Model.Plot == null)
-        {
-            <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.imdbID" class="show btn btn-primary">Show Details</a>
-        }
-    </div>
+<div class="img-div nav card-body">
+    <h5 class="card-title">@Model.Title</h5><hr/>
+    <p class="card-text">@Model.Year.</p><hr />
+    @if (Model.Plot == null)
+    {
+        <div class="show">
+            <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.imdbID" class="btn btn-primary">Show Details</a>
+        </div>
+    }
+</div>
 </div>
 
 @section Scripts{
