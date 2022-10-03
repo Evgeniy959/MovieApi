@@ -2,9 +2,11 @@
     background-color: peru;
 }
 .nav {
-    background-color: gainsboro;
+    background-color: darkslategray;
 }
-
+.block {
+    background-color: darkgray;
+}
 .bod {
     background-color: burlywood;
 }
@@ -12,14 +14,14 @@ img {
     width: 150px;
     height: 500px;
     object-fit: cover;
+    margin-top: 5px
 }
 .img-div {
-    height: 120px;   
+    height: 190px;   
 }
 .show {
-    width: 150px;
-    height: 100px;
-    //object-fit: cover;
+    width: 14rem;
+    //height: auto;
 }
 
 

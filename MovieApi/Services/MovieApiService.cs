@@ -29,18 +29,9 @@ namespace MovieApi.Services
             this.memoryCache = memoryCache;
         }
 
-        /*public async Task<string> SearchByTitle(string title)
-        {
-            var response = await httpClient.GetAsync($"{BaseUrl}?apikey={ApiKey}&s={title}");
-            var result = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(result);
-
-            return result;
-        }*/
         public async Task<MovieApiResponse> SearchByTitle(string title)
         {
             MovieApiResponse result = null;
-            //hulk,Hulk,HULK,HULk =>hulk
             if (!memoryCache.TryGetValue(title.ToLower(), out result))
             {
                 var response = await httpClient.GetAsync($"{BaseUrl}?apikey={ApiKey}&s={title}");
